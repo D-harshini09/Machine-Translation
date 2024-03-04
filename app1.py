@@ -1,23 +1,29 @@
 import streamlit as st
-from googletrans import Translator
+from googletrans import Translator, LANGUAGES
 
-# Function to translate text using Google Translate API
-def translate_text(text, src_lang, tgt_lang):
+# Function to translate text
+def translate_text(input_text, target_language):
     translator = Translator()
-    translated = translator.translate(text, src=src_lang, dest=tgt_lang)
-    return translated.text
+    translated_text = translator.translate(input_text, dest=target_language)
+    return translated_text.text
 
-# Streamlit UI
-st.title("Translation")
+# Streamlit app
+def main():
+    st.title("Google Translate App")
+    st.write("Translate text to any language supported by Google Translate.")
 
-src_lang = st.selectbox("Select source language:", ["English","French","German","Spanish","Italian","Korean","Chinese","Tamil"])
-tgt_lang = st.selectbox("Select target language:", ["English","French","German","Spanish","Italian","Korean","Chinese","Tamil"])
+    # Input text box
+    input_text = st.text_area("Enter text to translate:", "")
 
-input_text = st.text_area("Enter text to translate:")
-if st.button("Translate"):
-    if input_text:
-        translated_text = translate_text(input_text, src_lang, tgt_lang)
-        st.write("Translated text:")
-        st.write(translated_text)
-    else:
-        st.warning("Please enter text to translate.")
+    # Target language selection
+    target_language = st.selectbox("Select target language:", sorted(LANGUAGES.values()))
+
+    if st.button("Translate"):
+        if input_text.strip() != "":
+            translated_text = translate_text(input_text, target_language)
+            st.write("Translated text:", translated_text)
+        else:
+            st.warning("Please enter some text to translate.")
+
+if __name__ == "__main__":
+    main()
