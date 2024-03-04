@@ -8,10 +8,10 @@ def translate_text(text, src_lang, tgt_lang):
     return translated.text
 
 # Streamlit UI
-st.title("Machine Translation for All Languages")
+st.title("Translation")
 
-src_lang = st.selectbox("Select source language:", ["English", "French", "German", "Spanish", "Italian", "Japanese"])
-tgt_lang = st.selectbox("Select target language:", ["English", "French", "German", "Spanish", "Italian", "Japanese"])
+src_lang = st.selectbox("Select source language:", ["English","French","German","Spanish","Italian","Korean","Chinese","Tamil"])
+tgt_lang = st.selectbox("Select target language:", ["English","French","German","Spanish","Italian","Korean","Chinese","Tamil"])
 
 input_text = st.text_area("Enter text to translate:")
 if st.button("Translate"):
