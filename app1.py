@@ -4,8 +4,14 @@ from googletrans import Translator, LANGUAGES
 # Function to translate text
 def translate_text(input_text, target_language):
     translator = Translator()
-    translated_text = translator.translate(input_text, dest=target_language)
-    return translated_text.text
+    translated_text = None
+    try:
+        translated = translator.translate(input_text, dest=target_language)
+        if translated and hasattr(translated, 'text'):
+            translated_text = translated.text
+    except Exception as e:
+        st.error(f"Translation Error: {e}")
+    return translated_text
 
 # Streamlit app
 def main():
@@ -21,7 +27,10 @@ def main():
     if st.button("Translate"):
         if input_text.strip() != "":
             translated_text = translate_text(input_text, target_language)
-            st.write("Translated text:", translated_text)
+            if translated_text:
+                st.write("Translated text:", translated_text)
+            else:
+                st.warning("Translation failed.")
         else:
             st.warning("Please enter some text to translate.")
 
